@@ -1,0 +1,58 @@
+* {
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+}
+
+body {
+    font-family:Arial, Helvetica, sans-serif;
+    padding: 0 20px;
+}
+header {
+    padding: 20px 0;
+    text-align: center;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+header nav ul a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+section {
+    margin: 40px 0;
+    padding: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+p {
+    margin-bottom: 20px;
+}
+
+.projects {
+    display: flex;
+    gap: 20px;
+}
+
+.project {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 10px 0;
+}
