@@ -1,8 +1,56 @@
 const sections = document.querySelectorAll('.section');
-const navLinks = document.querySelectorAll('.nav-menu a');
-const progressBar = document.querySelector('.progress-bar');
+const navLinks = document.querySelectorAll('.nav-link');
+let currentSectionIndex = 0;
 
-function highlightSection() {
+window.addEventListener('beforeunload', () => {
+    location.reload(true);
+});
+
+
+function scrollToSection(index) {
+    if (index < 0 || index >= sections.length) return;
+
+    const targetSection = sections[index];
+    window.scrollTo({
+        top: targetSection.offsetTop,
+        behavior: 'smooth'
+    });
+
+    currentSectionIndex = index;
+    highlightNavLink();
+}
+
+function highlightNavLink() {
+    navLinks.forEach((link, index) => {
+        if (index === currentSectionIndex) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+}
+
+let isScrolling = false;
+window.addEventListener('wheel', (event) => {
+    if (isScrolling) return;
+    isScrolling = true;
+
+    if (event.deltaY > 0) {
+        if (currentSectionIndex < sections.length - 1) {
+            scrollToSection(currentSectionIndex + 1);
+        }
+    } else {
+        if (currentSectionIndex > 0) {
+            scrollToSection(currentSectionIndex - 1);
+        }
+    }
+
+    setTimeout(() => {
+        isScrolling = false;
+    }, 1000);
+});
+
+window.addEventListener('scroll', () => {
     const scrollPosition = window.scrollY + window.innerHeight / 2;
 
     sections.forEach((section, index) => {
@@ -10,47 +58,10 @@ function highlightSection() {
         const sectionHeight = section.offsetHeight;
 
         if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-            navLinks.forEach((link) => link.classList.remove('active'));
-            if (index === 0) {
-                document.querySelector('.home-link').classList.add('active');
-            } else {
-                navLinks[index - 1].classList.add('active');
-            }
+            currentSectionIndex = index;
+            highlightNavLink();
         }
-    });
-}
-
-function checkInView() {
-    sections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= window.innerHeight * 0.75) {
-            section.classList.add('in-view');
-        }
-    });
-}
-
-function updateProgressBar() {
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = (scrollTop / scrollHeight) * 100;
-    progressBar.style.width = `${scrolled}%`;
-}
-
-window.addEventListener('scroll', () => {
-    highlightSection();
-    checkInView();
-    updateProgressBar();
-});
-
-document.querySelectorAll('.nav-menu a, .home-link').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        window.scrollTo({
-            top: target.offsetTop,
-            behavior: 'smooth'
-        });
     });
 });
 
-checkInView();
+highlightNavLink();

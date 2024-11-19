@@ -1,13 +1,51 @@
+@font-face {
+    font-family: 'Tungsten-Bold';
+    src: url(/font/Tungsten-Bold.ttf);
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 html {
+    overflow: hidden;
     scroll-behavior: smooth;
 }
+
+a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #000;
+}
+
+h2, h3 {
+    margin-bottom: 20px;
+    color: #000;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.transition {
+    transition: 0.3s ease;
+}
+
 /* Sidebar */
 .sidebar {
     position: fixed;
@@ -21,9 +59,14 @@ html {
     padding: 20px;
 }
 
+.content {
+    margin-left: 220px;
+    padding: 20px;
+    width: calc(100% - 220px);
+}
+
 .sidebar h1 a {
     color: #000;
-    text-decoration: none;
     font-size: 2rem;
     margin-bottom: 10px;
 }
@@ -37,27 +80,22 @@ html {
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
 .nav-menu a {
     color: #000;
-    text-decoration: none;
     font-size: 1.1rem;
     position: relative;
     padding-left: 10px;
-    transition: color 0.3s;
+    transition: color 0.3s ease, font-weight 0.3s ease;
 }
 
-.nav-menu a:hover,
 .nav-menu a.active {
     color: #81a5f9;
     font-weight: bold;
-    transition: color 0.2s ease, font-weight 0.2s ease;
 }
 
-
-/* Footer */
 .sidebar-footer {
     margin-top: auto;
     writing-mode: vertical-rl;
@@ -65,53 +103,22 @@ html {
 }
 
 .sidebar-footer p {
-    margin: 10px 0;
     font-size: 0.7rem;
     color: #000;
 }
 
-/* Home Section */
-.content {
-    margin-left: 220px;
-    padding: 20px;
-    width: calc(100% - 220px);
-}
-
 .home-section {
+    background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(0, 0, 0, 0)), url("");
+}
+
+.section {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     text-align: center;
-}
-
-.home-section h2 {
-    font-size: 3rem;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.home-section p {
-    font-size: 1.2rem;
-    color: #666;
-}
-
-/* About Me Section */
-.section {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     padding: 20px;
-    text-align: center;
-}
-
-.section {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 .section.in-view {
@@ -119,30 +126,24 @@ html {
     transform: translateY(0);
 }
 
-.section h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+.home-section h2 {
+    font-family: Tungsten-Bold;
+    font-size: 5rem;
 }
 
-h2 {
-    margin-bottom: 20px;
-    font-size: 2rem;
-    text-align: center;
-}
-
-p {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.about-section a {
+.about-section a,
+.project-link {
     display: inline-block;
-    padding: 10px 20px;
-    background-color: #333;
     color: #fff;
     border-radius: 5px;
-    text-decoration: none;
-    margin-top: 10px;
+    background-color: #333;
+    padding: 10px 20px;
+}
+
+.project-link {
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 4px;
 }
 
 /* Projects Section */
@@ -151,7 +152,6 @@ p {
     flex-wrap: wrap;
     gap: 30px;
     justify-content: center;
-    text-align: center;
 }
 
 .project {
@@ -163,6 +163,10 @@ p {
     position: relative;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.project p {
+    font-size: 1rem;
 }
 
 .project::before {
@@ -181,40 +185,7 @@ p {
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
-.project h3 {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #333;
-    margin: 10px 0;
-}
-
-.project p {
-    font-size: 0.9rem;
-    color: #666;
-    margin: 10px 0;
-}
-
-.project-link {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: #333;
-    color: #fff;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.project-link:hover {
-    background-color: #555;
-}
-
-.contact-section h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
-}
-
+/* Contact Section */
 .contact-form {
     width: 100%;
     max-width: 600px;
@@ -247,15 +218,13 @@ p {
     border-color: #81a5f9;
     box-shadow: 0 4px 8px rgba(129, 165, 249, 0.3);
     transform: scale(1.02);
-    transition: transform 0.2s ease;
 }
-
 
 .contact-form button {
     padding: 12px 20px;
     font-size: 1rem;
     color: #fff;
-    background-color: #333;
+    background-color: #000;
     border: none;
     border-radius: 5px;
     cursor: pointer;
