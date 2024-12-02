@@ -7,10 +7,17 @@
         <meta name="description" content="My portfolio">
 
         <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
         <script src="js/script.js" defer></script>
 
-        <title>Stevens Noun</title>
+        <title>Stevens Noun | Portfolio</title>
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Stevens Noun Portfolio">
+    <meta property="og:description" content="Explore the portfolio of Stevens Noun, showcasing skills in web development, programming, and game development.">
+    <meta property="og:image" content="media/portfolio-preview.jpg">
+    <meta property="og:url" content="https://yourwebsite.com">
+    <meta name="twitter:card" content="summary_large_image">
 
     </head>
 
@@ -27,44 +34,73 @@
             </nav>
             <!-- Footer -->
             <footer class="sidebar-footer">
-                <p>&copy; 2024 Stevens. All Rights Reserved.</p>
+                <p>&copy; 2023 Stevens. All Rights Reserved.</p>
             </footer>
         </aside>
-
-        <div class="progress-bar"></div>
 
         <main class="content">
             <!-- Home Section -->
             <section id="home" class="section home-section">
-                <h2>STEVENS NOUN <span class="material-icons" style="font-size: 3.5rem;color:#81a5f9;">verified</span></h2>
+                <h2>STEVENS NOUN</h2>
                 <p>Welcome to my portfolio!</p>
             </section>
 
             <!-- About Me Section -->
-            <section id="about" class="section about-section"> 
+            <section id="about" class="section about-section">
                 <h2>ABOUT ME</h2>
                 <div class="profile">
+                    <div class="profile-img">
+                        <img src="/media/profile-0.jpg" alt="Stevens">
+                    </div>
                     <div class="details">
-                        <p><strong>Name </strong>// Stevens Noun</p>
-                        <p><strong>Age </strong>// <span id="age"></span></p>
-                        <p><strong>Location </strong>// Canada</p>
+                        <p><strong>NAME// </strong>Stevens Noun</p>
+                        <p><strong>BIRTHDAY// </strong>001028</p>
+                        <p><strong>LOCATION// </strong>Canada</p>
+                        <p><strong>HOBBIES// </strong>Coding, Content Creation, Gaming, Music</p>
+                        <p>
+                            I am passionate about web coding, programming, and exploring the latest in technology. 
+                            In addition to creating engaging content, I enjoy playing video games, which inspire my creativity and problem-solving skills. 
+                            I'm always looking for opportunities to gain more experience, enhance my expertise, and bring innovative ideas to life
+                        </p>
                     </div>
                 </div>
-                <a href="https://github.com/beokki">GitHub</a>
+            
+                <!-- Skills Section -->
+                <div class="skills">
+                    <div class="discord-roles">
+                        <span class="role html"><i class="fab fa-html5"></i> HTML/CSS</span>
+                        <span class="role js"><i class="fab fa-js-square"></i> JavaScript</span>
+                        <span class="role cpp"><i class="fas fa-code"></i> C#/C++</span>
+                        <span class="role java"><i class="fab fa-java"></i> Java</span>
+                        <span class="role unity"><i class="fas fa-gamepad"></i> Unity</span>
+                        <span class="role unreal"><i class="fas fa-gamepad"></i> Unreal Engine</span>
+                    </div>
+                </div>
+            
+                <!-- Social Icons -->
+                <div class="social-icons">
+                    <a href="https://github.com/beokki" target="_blank" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/stevensnoun/" target="_blank" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
             </section>
 
-            <!-- Projects Section -->
+             <!-- Projects Section -->
             <section id="projects" class="section">
                 <h2>PROJECTS</h2>
                 <div class="projects">
                     <article class="project">
-                        <h3>Shiro-Bot</h3>
+                        <h3>Shiro Bot</h3>
                         <p>A Discord Bot in JavaScript</p>
                         <a href="https://github.com/beokki/Shiro-Bot" target="_blank" class="project-link">View on GitHub</a>
                     </article>
                     <article class="project">
-                        <h3>Project 2</h3>
-                        <p>Description 2</p>
+                        <h3>Personal Portfolio</h3>
+                        <p>Portfolio website showcasing my projects</p>
+                        <a href="https://github.com/beokki/stevens.github.io" target="_blank" class="project-link">View on GitHub</a>
                     </article>
                     <article class="project">
                         <h3>Project 3</h3>

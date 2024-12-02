@@ -23,7 +23,6 @@ a {
 
 p {
     font-size: 1.2rem;
-    margin-bottom: 10px;
     text-align: center;
     color: #000;
 }
@@ -110,10 +109,6 @@ h3 {
 }
 
 /* Home Section */
-.home-section {
-    background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(0, 0, 0, 0)), url("");
-}
-
 .section {
     display: flex;
     flex-direction: column;
@@ -135,35 +130,125 @@ h3 {
 }
 
 /* About Section */
+.about-section {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
 .about-section a {
     margin-top: 20px;
     display: inline-block;
     color: #fff;
-    border-radius: 5px;
-    background-color: #000;
-    padding: 10px 20px;
+    border-radius: 50%;
+    background-color: #000000;
+    padding: 10px 10px;
 }
 
+.social {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social a {
+    font-size: 1.5rem;
+}
+
+/* Profile Container */
+.profile-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+/* Profile Section */
 .profile {
     display: flex;
+    gap: 20px;
     align-items: center;
-    gap: 30px;
-    background-color: #f9f9f9;
+    background-color: #eee;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.profile-img img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid #000;
+    object-fit: cover;
+}
+
+.details {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+}
+    
 .details p {
-    font-size: 1.2rem;
-    color: #000;
+        font-size: 1rem;
+        text-align: left;
 }
 
 .details p strong {
-    color: #81a5f9;
     font-weight: bold;
 }
 
+/* Skills Section */
+.skills {
+    text-align: left;
+}
+
+.skills h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.discord-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.role {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 15px;
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.role:hover {
+    background-color: #23272a;
+    transform: translateY(-2px);
+}
+
+.role i {
+    font-size: 1rem;
+}
+
+/* Social Icons */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-icons a {
+    font-size: 1.5rem;
+}
 .project-link {
     margin-top: 15px;
     display: inline-block;
@@ -271,4 +356,104 @@ h3 {
 
 .contact-form button:active {
     transform: translateY(0);
+}
+
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: linear-gradient(180deg, #f5f7fa, #c3cfe2);
+    color: #333;
+}
+
+a:hover {
+    color: #81a5f9;
+}
+
+button:hover {
+    background-color: #81a5f9;
+    color: #fff;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.section {
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100px;
+    }
+    .content {
+        margin-left: 120px;
+    }
+
+     /* About Section Adjustments */
+     .about-section {
+        padding: 10px;
+        gap: 20px;
+    }
+
+    .profile {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-img img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .details {
+        gap: 5px;
+    }
+
+    .details p {
+        font-size: 0.9rem;
+    }
+
+    /* Skills Section */
+    .discord-roles {
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .role {
+        padding: 4px 10px;
+        font-size: 0.8rem;
+    }
+
+    /* Social Icons */
+    .social-icons {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .social-icons a {
+        font-size: 1.2rem;
+    }
+
+    /* Projects Section */
+    .projects {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .project {
+        width: 100%;
+        height: auto;
+        padding: 15px;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 10px;
+        width: 100%;
+    }
 }

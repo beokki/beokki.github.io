@@ -6,7 +6,6 @@ window.addEventListener('beforeunload', () => {
     location.reload(true);
 });
 
-
 function scrollToSection(index) {
     if (index < 0 || index >= sections.length) return;
 
@@ -65,21 +64,3 @@ window.addEventListener('scroll', () => {
 });
 
 highlightNavLink();
-
-function calculateAge(birthDate) {
-    const today = new Date();
-    const birth = new Date(birthDate);
-    let age = today.getFullYear() - birth.getFullYear();
-    const monthDifference = today.getMonth() - birth.getMonth();
-    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birth.getDate())) {
-        age--;
-    }
-
-    return age;
-}
-function updateAge() {
-    const ageElement = document.getElementById('age');
-    const birthDate = '2000-10-28';
-    ageElement.textContent = calculateAge(birthDate);
-}
-document.addEventListener('DOMContentLoaded', updateAge);
