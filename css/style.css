@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Tungsten-Bold';
-    src: url(../font/Tungsten-Bold.ttf)  format('truetype');
+    font-family: "Tungsten-Bold";
+    src: url(../font/Tungsten-Bold.ttf) format("truetype");
 }
 
 * {
@@ -10,26 +10,31 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Global Settings */
+/* ---------- Defaults ---------- */
 html {
     overflow: hidden;
     scroll-behavior: smooth;
 }
 
+body {
+    font-family: "Poppins", Arial, sans-serif;
+    background: linear-gradient(180deg, #fff, #cadaff);
+}
+
 a {
+    color: #000;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 p {
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-align: center;
-    color: #000;
 }
 
-h2, h3 {
+h2,
+h3 {
     margin-bottom: 20px;
-    color: #000;
 }
 
 h2 {
@@ -42,31 +47,23 @@ h3 {
     font-weight: bold;
 }
 
-.transition {
-    transition: 0.3s ease;
-}
-
-/* Sidebar */
+/* ---------- Sidebar ---------- */
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     width: 200px;
     height: 100vh;
-    color: #000;
     display: flex;
     flex-direction: column;
     padding: 20px;
-}
 
-.content {
-    margin-left: 220px;
-    padding: 20px;
-    width: calc(100% - 220px);
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+    will-change: transform;
 }
 
 .sidebar h1 a {
-    color: #000;
     font-size: 2rem;
     margin-bottom: 10px;
 }
@@ -84,11 +81,14 @@ h3 {
 }
 
 .nav-menu a {
-    color: #000;
     font-size: 1.1rem;
     position: relative;
     padding-left: 10px;
     transition: color 0.3s ease, font-weight 0.3s ease;
+}
+
+.hvr:hover {
+    color: #81a5f9;
 }
 
 .nav-menu a.active {
@@ -96,7 +96,7 @@ h3 {
     font-weight: bold;
 }
 
-/* Footer */
+/* ---------- Footer ---------- */
 .sidebar-footer {
     margin-top: auto;
     writing-mode: vertical-rl;
@@ -105,10 +105,15 @@ h3 {
 
 .sidebar-footer p {
     font-size: 0.7rem;
-    color: #000;
 }
 
-/* Home Section */
+/* ---------- Sections ---------- */
+.content {
+    margin-left: 220px;
+    padding: 20px;
+    width: calc(100% - 220px);
+}
+
 .section {
     display: flex;
     flex-direction: column;
@@ -117,6 +122,11 @@ h3 {
     height: 100vh;
     text-align: center;
     padding: 20px;
+
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    animation: fadeIn 1s ease-in-out forwards;
 }
 
 .section.in-view {
@@ -129,7 +139,7 @@ h3 {
     font-size: 5rem;
 }
 
-/* About Section */
+/* ---------- About me  ---------- */
 .about-section {
     padding: 20px;
     max-width: 800px;
@@ -139,27 +149,7 @@ h3 {
     gap: 30px;
 }
 
-.about-section a {
-    margin-top: 20px;
-    display: inline-block;
-    color: #fff;
-    border-radius: 50%;
-    background-color: #000000;
-    padding: 10px 10px;
-}
-
-.social {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.social a {
-    font-size: 1.5rem;
-}
-
-/* Profile Container */
+/* -- Profile -- */
 .profile-container {
     display: flex;
     justify-content: space-between;
@@ -167,12 +157,11 @@ h3 {
     gap: 20px;
 }
 
-/* Profile Section */
 .profile {
     display: flex;
     gap: 20px;
     align-items: center;
-    background-color: #eee;
+    background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -186,29 +175,24 @@ h3 {
     object-fit: cover;
 }
 
+/* -- Details -- */
 .details {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
-    
+
 .details p {
-        font-size: 1rem;
-        text-align: left;
+    text-align: left;
 }
 
 .details p strong {
     font-weight: bold;
 }
 
-/* Skills Section */
+/* -- Skills -- */
 .skills {
     text-align: left;
-}
-
-.skills h3 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
 }
 
 .discord-roles {
@@ -239,7 +223,7 @@ h3 {
     font-size: 1rem;
 }
 
-/* Social Icons */
+/* -- Socials -- */
 .social-icons {
     display: flex;
     justify-content: center;
@@ -247,24 +231,18 @@ h3 {
 }
 
 .social-icons a {
-    font-size: 1.5rem;
-}
-.project-link {
-    margin-top: 15px;
-    display: inline-block;
-    color: #fff;
-    border-radius: 5px;
-    background-color: #000;
-    padding: 10px 20px;
+    font-size: 2.5rem;
 }
 
-.project-link {
-    font-weight: bold;
-    padding: 8px 12px;
-    border-radius: 4px;
+.social-icons i {
+    transition: color 0.3s ease;
 }
 
-/* Projects Section */
+.fab:hover {
+    color: #81a5f9;
+}
+
+/* ---------- Projects ---------- */
 .projects {
     display: flex;
     flex-wrap: wrap;
@@ -276,15 +254,10 @@ h3 {
     background-color: #f5f5f5;
     padding: 30px 20px;
     width: 220px;
-    height: 200px;
+    min-height: 200px;
     border: 1px solid #ddd;
     position: relative;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.project p {
-    font-size: 1rem;
 }
 
 .project::before {
@@ -298,12 +271,30 @@ h3 {
     border-radius: 2px 2px 0 0;
 }
 
-.project:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+.project-card.loading::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
 }
 
-/* Contact Section */
+.project-link {
+    margin-top: 25px;
+    display: inline-block;
+    color: #fff;
+    border-radius: 5px;
+    background-color: #000;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+/* ---------- Contact ---------- */
 .contact-form {
     width: 100%;
     max-width: 600px;
@@ -350,7 +341,7 @@ h3 {
 }
 
 .contact-form button:hover {
-    background-color: #555;
+    background-color: #333;
     transform: translateY(-2px);
 }
 
@@ -358,102 +349,52 @@ h3 {
     transform: translateY(0);
 }
 
-body {
-    font-family: 'Poppins', Arial, sans-serif;
-    background: linear-gradient(180deg, #f5f7fa, #c3cfe2);
-    color: #333;
-}
-
-a:hover {
-    color: #81a5f9;
-}
-
-button:hover {
-    background-color: #81a5f9;
-    color: #fff;
-}
-
-/* Animations */
+/* ---------- Animations ---------- */
 @keyframes fadeIn {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.section {
-    opacity: 0;
-    animation: fadeIn 1s ease-in-out forwards;
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
 }
 
-/* Responsive Design */
+/* ---------- Responsible ---------- */
 @media (max-width: 768px) {
     .sidebar {
-        width: 100px;
+        transform: translateX(-100%);
+        z-index: 100;
     }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
     .content {
-        margin-left: 120px;
-    }
-
-     /* About Section Adjustments */
-     .about-section {
-        padding: 10px;
-        gap: 20px;
-    }
-
-    .profile {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .profile-img img {
-        width: 120px;
-        height: 120px;
-    }
-
-    .details {
-        gap: 5px;
-    }
-
-    .details p {
-        font-size: 0.9rem;
-    }
-
-    /* Skills Section */
-    .discord-roles {
-        justify-content: center;
-        gap: 5px;
-    }
-
-    .role {
-        padding: 4px 10px;
-        font-size: 0.8rem;
-    }
-
-    /* Social Icons */
-    .social-icons {
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-
-    .social-icons a {
-        font-size: 1.2rem;
-    }
-
-    /* Projects Section */
-    .projects {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .project {
         width: 100%;
-        height: auto;
+        margin-left: 0;
         padding: 15px;
     }
 
-    .content {
-        margin-left: 0;
-        padding: 10px;
-        width: 100%;
+    .profile {
+        padding: 15px;
+    }
+
+    .projects {
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
 }
