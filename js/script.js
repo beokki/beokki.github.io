@@ -33,15 +33,30 @@ function debounce(func, wait) {
   };
 }
 
+function isMobileDevice() {
+  return window.innerWidth <= 1024;
+}
+
 const handleWheel = debounce((event) => {
-  if (event.deltaY > 0 && currentSectionIndex < sections.length - 1) {
-    scrollToSection(currentSectionIndex + 1);
-  } else if (event.deltaY < 0 && currentSectionIndex > 0) {
-    scrollToSection(currentSectionIndex - 1);
+  // Only handle wheel event on desktop
+  if (!isMobileDevice()) {
+    if (event.deltaY > 0 && currentSectionIndex < sections.length - 1) {
+      scrollToSection(currentSectionIndex + 1);
+    } else if (event.deltaY < 0 && currentSectionIndex > 0) {
+      scrollToSection(currentSectionIndex - 1);
+    }
   }
 }, 150);
 
 window.addEventListener("wheel", handleWheel);
+
+function updateScrollBehavior() {
+  document.documentElement.style.overflow = isMobileDevice() ? 'auto' : 'hidden';
+}
+
+window.addEventListener('resize', debounce(updateScrollBehavior, 150));
+
+updateScrollBehavior();
 
 function scrollToSection(index) {
   if (index < 0 || index >= sections.length) return;

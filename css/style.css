@@ -373,7 +373,7 @@ h3 {
 }
 
 /* ---------- Responsible ---------- */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .sidebar {
         transform: translateX(-100%);
         z-index: 100;
