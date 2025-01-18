@@ -1,6 +1,13 @@
 const sections = document.querySelectorAll(".section");
 const navLinks = document.querySelectorAll(".nav-link");
+
+const projectImages = document.querySelectorAll(".project-image");
+const previewImages = document.querySelectorAll(".preview-image");
+const projectInfo = document.querySelector(".project-info");
+
+let currentIndex = 0;
 let currentSectionIndex = 0;
+let isTransitioning = false;
 
 const observerOptions = {
   root: null,
@@ -21,6 +28,30 @@ const sectionObserver = new IntersectionObserver((entries) => {
 
 sections.forEach((section) => sectionObserver.observe(section));
 
+const projectData = [
+  {
+    title: "Personal Portfolio",
+    description:
+      "Portfolio website showcasing my projects and skills.",
+    tags: ["HTML5", "CSS3", "JavaScript"],
+    link: "https://github.com/beokki/stevens.github.io",
+  },
+  {
+    title: "Shiro Bot",
+    description:
+      "Discord Bot built with JavaScript, featuring custom commands.",
+    tags: ["JavaScript", "Discord.js", "Node.js"],
+    link: "https://github.com/beokki/Shiro-Bot",
+  },
+  {
+    title: "Game Project",
+    description:
+      "HD-2D game developed in Unreal Engine 5.4",
+    tags: ["Unreal Engine", "3D", "Game Design"],
+    link: "#",
+  },
+];
+
 function debounce(func, wait) {
   let timeout;
   return function executedFunction(...args) {
@@ -38,7 +69,6 @@ function isMobileDevice() {
 }
 
 const handleWheel = debounce((event) => {
-  // Only handle wheel event on desktop
   if (!isMobileDevice()) {
     if (event.deltaY > 0 && currentSectionIndex < sections.length - 1) {
       scrollToSection(currentSectionIndex + 1);
@@ -51,10 +81,12 @@ const handleWheel = debounce((event) => {
 window.addEventListener("wheel", handleWheel);
 
 function updateScrollBehavior() {
-  document.documentElement.style.overflow = isMobileDevice() ? 'auto' : 'hidden';
+  document.documentElement.style.overflow = isMobileDevice()
+    ? "auto"
+    : "hidden";
 }
 
-window.addEventListener('resize', debounce(updateScrollBehavior, 150));
+window.addEventListener("resize", debounce(updateScrollBehavior, 150));
 
 updateScrollBehavior();
 
@@ -74,5 +106,86 @@ function highlightNavLink() {
     link.classList.toggle("active", index === currentSectionIndex);
   });
 }
+
+function updateProjectInfo(index) {
+  const project = projectData[index];
+  const title = projectInfo.querySelector(".project-title");
+  const description = projectInfo.querySelector(".project-description");
+  const tags = projectInfo.querySelector(".project-tags");
+  const link = projectInfo.querySelector(".project-link");
+
+  title.textContent = project.title;
+  description.textContent = project.description;
+  tags.innerHTML = project.tags
+    .map((tag) => `<span class="tag">${tag}</span>`)
+    .join("");
+  link.href = project.link;
+}
+
+function updatePreviews(newIndex) {
+  const totalPreviews = previewImages.length;
+  const spacing = 80; // Spacing between items
+  const centerY = 100; // Center position
+
+  previewImages.forEach((preview, i) => {
+    // Calculate relative position in the rotation
+    let relativeIndex = i - newIndex;
+    if (relativeIndex > totalPreviews / 2) relativeIndex -= totalPreviews;
+    if (relativeIndex < -totalPreviews / 2) relativeIndex += totalPreviews;
+
+    // Always calculate position along the oval path
+    const y = centerY + relativeIndex * spacing;
+    const x = -50 + Math.abs(relativeIndex) * 3; // Subtle horizontal movement
+
+    // Show/hide based on position
+    if (Math.abs(relativeIndex) <= 1) {
+      preview.classList.add("visible");
+    } else {
+      preview.classList.remove("visible");
+    }
+
+    // Apply transform - items always follow the path
+    preview.style.transform = `translate(${x}%, ${y}px)`;
+
+    // Update active state
+    preview.setAttribute("data-active", i === newIndex ? "true" : "false");
+  });
+}
+
+function selectProject(newIndex) {
+  if (isTransitioning) return;
+  isTransitioning = true;
+
+  const totalProjects = projectImages.length;
+  newIndex = ((newIndex % totalProjects) + totalProjects) % totalProjects;
+
+  // Update main project
+  projectImages[currentIndex].classList.remove("active");
+  projectImages[newIndex].classList.add("active");
+
+  // Update previews
+  updatePreviews(newIndex);
+
+  // Update project info
+  updateProjectInfo(newIndex);
+
+  // Update current index
+  currentIndex = newIndex;
+
+  setTimeout(() => {
+    isTransitioning = false;
+  }, 500);
+}
+
+// Initialize
+document.addEventListener("DOMContentLoaded", () => {
+  updatePreviews(0);
+});
+
+previewImages.forEach((preview, index) => {
+  preview.addEventListener("click", () => {
+    selectProject(index);
+  });
+});
 
 highlightNavLink();
