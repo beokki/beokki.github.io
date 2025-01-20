@@ -332,10 +332,9 @@ h3 {
 }
 
 .stat-dot {
-    width: 0.5rem;
-    height: 0.5rem;
-    background: linear-gradient(to right, #81a5f9, #ff69b4);
-    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    color: #81a5f9;
 }
 
 .stat-header h2 {
