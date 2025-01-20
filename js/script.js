@@ -49,7 +49,7 @@ const projectData = [
       "HD-2D game developed in Unreal Engine 5.4",
     tags: ["Unreal Engine", "3D", "Game Design"],
     link: "#",
-  },
+  }
 ];
 
 function debounce(func, wait) {
@@ -185,6 +185,78 @@ document.addEventListener("DOMContentLoaded", () => {
 previewImages.forEach((preview, index) => {
   preview.addEventListener("click", () => {
     selectProject(index);
+  });
+});
+
+function addProjectCorners() {
+  const projectContainer = document.querySelector('.project-image-container');
+  if (!projectContainer.querySelector('.corner')) {
+      const corners = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+      corners.forEach(position => {
+          const corner = document.createElement('div');
+          corner.className = `corner ${position}`;
+          projectContainer.appendChild(corner);
+      });
+  }
+}
+
+// Touch handling variables
+let touchStartX = 0;
+let touchEndX = 0;
+const minSwipeDistance = 50; // Minimum distance for a swipe
+
+// Handle touch start
+function handleTouchStart(event) {
+  touchStartX = event.touches[0].clientX;
+}
+
+// Handle touch end
+function handleTouchEnd(event) {
+  touchEndX = event.changedTouches[0].clientX;
+  handleSwipe();
+}
+
+// Process swipe
+function handleSwipe() {
+  const swipeDistance = touchEndX - touchStartX;
+  
+  if (Math.abs(swipeDistance) > minSwipeDistance) {
+      if (swipeDistance > 0) {
+          // Swipe right - go to previous project
+          selectProject(currentIndex - 1);
+      } else {
+          // Swipe left - go to next project
+          selectProject(currentIndex + 1);
+      }
+  }
+}
+
+// Initialize touch controls
+function initTouchControls() {
+  const projectContainer = document.querySelector('.project-image-container');
+  
+  // Add touch event listeners
+  projectContainer.addEventListener('touchstart', handleTouchStart, false);
+  projectContainer.addEventListener('touchend', handleTouchEnd, false);
+  
+  // Add corner elements
+  addProjectCorners();
+}
+
+// Add to document ready
+document.addEventListener('DOMContentLoaded', () => {
+  updatePreviews(0);
+  initTouchControls();
+});
+
+// Update any existing event listeners to work with touch
+previewImages.forEach((preview, index) => {
+  preview.addEventListener('click', () => {
+      selectProject(index);
+  });
+  preview.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      selectProject(index);
   });
 });
 
