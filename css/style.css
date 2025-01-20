@@ -19,6 +19,35 @@ html {
 body {
     font-family: "Poppins", Arial, sans-serif;
     background: linear-gradient(180deg, #fff, #cadaff);
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Add a subtle radial gradient overlay */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(255, 255, 255, 0.3) 100%);
+    pointer-events: none;
+    z-index: -1;
 }
 
 a {
@@ -362,7 +391,6 @@ h3 {
 
 .social-links a:hover .fa-github { color: #333; }
 .social-links a:hover .fa-twitch { color: #6441a5; }
-.social-links a:hover .fa-youtube { color: #ff0000; }
 .social-links a:hover .fa-linkedin { color: #0077b5; }
 
 /* ---------- Projects ---------- */
@@ -484,12 +512,15 @@ h3 {
     transition: all 0.5s ease;
     opacity: 0;
     pointer-events: none;
+
+    border: 3px solid #81a5f9;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .preview-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .preview-image.visible {

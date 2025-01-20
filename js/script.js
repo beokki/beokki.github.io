@@ -124,7 +124,7 @@ function updateProjectInfo(index) {
 
 function updatePreviews(newIndex) {
   const totalPreviews = previewImages.length;
-  const spacing = 80; // Spacing between items
+  const spacing = 90; // Spacing between items
   const centerY = 100; // Center position
 
   previewImages.forEach((preview, i) => {
