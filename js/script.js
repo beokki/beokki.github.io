@@ -5,6 +5,10 @@ const projectImages = document.querySelectorAll(".project-image");
 const previewImages = document.querySelectorAll(".preview-image");
 const projectInfo = document.querySelector(".project-info");
 
+const minSwipeDistance = 50;
+
+let touchStartX = 0;
+let touchEndX = 0;
 let currentIndex = 0;
 let currentSectionIndex = 0;
 let isTransitioning = false;
@@ -26,31 +30,15 @@ const sectionObserver = new IntersectionObserver((entries) => {
   });
 }, observerOptions);
 
-sections.forEach((section) => sectionObserver.observe(section));
-
-const projectData = [
-  {
-    title: "Personal Portfolio",
-    description:
-      "Portfolio website showcasing my projects and skills.",
-    tags: ["HTML5", "CSS3", "JavaScript"],
-    link: "https://github.com/beokki/stevens.github.io",
-  },
-  {
-    title: "Shiro Bot",
-    description:
-      "Discord Bot built with JavaScript, featuring custom commands.",
-    tags: ["JavaScript", "Discord.js", "Node.js"],
-    link: "https://github.com/beokki/Shiro-Bot",
-  },
-  {
-    title: "Game Project",
-    description:
-      "HD-2D game developed in Unreal Engine 5.4",
-    tags: ["Unreal Engine", "3D", "Game Design"],
-    link: "#",
+const handleWheel = debounce((event) => {
+  if (!isMobileDevice()) {
+    if (event.deltaY > 0 && currentSectionIndex < sections.length - 1) {
+      scrollToSection(currentSectionIndex + 1);
+    } else if (event.deltaY < 0 && currentSectionIndex > 0) {
+      scrollToSection(currentSectionIndex - 1);
+    }
   }
-];
+}, 150);
 
 function debounce(func, wait) {
   let timeout;
@@ -64,31 +52,11 @@ function debounce(func, wait) {
   };
 }
 
-function isMobileDevice() {
-  return window.innerWidth <= 1024;
-}
-
-const handleWheel = debounce((event) => {
-  if (!isMobileDevice()) {
-    if (event.deltaY > 0 && currentSectionIndex < sections.length - 1) {
-      scrollToSection(currentSectionIndex + 1);
-    } else if (event.deltaY < 0 && currentSectionIndex > 0) {
-      scrollToSection(currentSectionIndex - 1);
-    }
-  }
-}, 150);
-
-window.addEventListener("wheel", handleWheel);
-
 function updateScrollBehavior() {
   document.documentElement.style.overflow = isMobileDevice()
     ? "auto"
     : "hidden";
 }
-
-window.addEventListener("resize", debounce(updateScrollBehavior, 150));
-
-updateScrollBehavior();
 
 function scrollToSection(index) {
   if (index < 0 || index >= sections.length) return;
@@ -106,6 +74,35 @@ function highlightNavLink() {
     link.classList.toggle("active", index === currentSectionIndex);
   });
 }
+function isMobileDevice() {
+  return window.innerWidth <= 1024;
+}
+
+sections.forEach((section) => sectionObserver.observe(section));
+window.addEventListener("wheel", handleWheel);
+window.addEventListener("resize", debounce(updateScrollBehavior, 150));
+
+const projectData = [
+  {
+    title: "Personal Portfolio",
+    description: "Portfolio website showcasing my projects and skills.",
+    tags: ["HTML5", "CSS3", "JavaScript"],
+    link: "https://github.com/beokki/stevens.github.io",
+  },
+  {
+    title: "Shiro Bot",
+    description:
+      "Discord Bot built with JavaScript, featuring custom commands.",
+    tags: ["JavaScript", "Discord.js", "Node.js"],
+    link: "https://github.com/beokki/Shiro-Bot",
+  },
+  {
+    title: "REEFTOWN",
+    description: "HD-2D game developed in Unreal Engine 5.5",
+    tags: ["Unreal Engine", "2D", "3D", "Game Design"],
+    link: "#",
+  },
+];
 
 function updateProjectInfo(index) {
   const project = projectData[index];
@@ -177,10 +174,17 @@ function selectProject(newIndex) {
   }, 500);
 }
 
-// Initialize
-document.addEventListener("DOMContentLoaded", () => {
-  updatePreviews(0);
-});
+function addProjectCorners() {
+  const projectContainer = document.querySelector(".project-image-container");
+  if (!projectContainer.querySelector(".corner")) {
+    const corners = ["top-left", "top-right", "bottom-left", "bottom-right"];
+    corners.forEach((position) => {
+      const corner = document.createElement("div");
+      corner.className = `corner ${position}`;
+      projectContainer.appendChild(corner);
+    });
+  }
+}
 
 previewImages.forEach((preview, index) => {
   preview.addEventListener("click", () => {
@@ -188,76 +192,104 @@ previewImages.forEach((preview, index) => {
   });
 });
 
-function addProjectCorners() {
-  const projectContainer = document.querySelector('.project-image-container');
-  if (!projectContainer.querySelector('.corner')) {
-      const corners = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
-      corners.forEach(position => {
-          const corner = document.createElement('div');
-          corner.className = `corner ${position}`;
-          projectContainer.appendChild(corner);
-      });
-  }
-}
+updateScrollBehavior();
+highlightNavLink();
 
-// Touch handling variables
-let touchStartX = 0;
-let touchEndX = 0;
-const minSwipeDistance = 50; // Minimum distance for a swipe
-
-// Handle touch start
 function handleTouchStart(event) {
   touchStartX = event.touches[0].clientX;
 }
 
-// Handle touch end
 function handleTouchEnd(event) {
   touchEndX = event.changedTouches[0].clientX;
   handleSwipe();
 }
 
-// Process swipe
 function handleSwipe() {
   const swipeDistance = touchEndX - touchStartX;
-  
+
   if (Math.abs(swipeDistance) > minSwipeDistance) {
-      if (swipeDistance > 0) {
-          // Swipe right - go to previous project
-          selectProject(currentIndex - 1);
-      } else {
-          // Swipe left - go to next project
-          selectProject(currentIndex + 1);
-      }
+    if (swipeDistance > 0) {
+      // Swipe right - go to previous project
+      selectProject(currentIndex - 1);
+    } else {
+      // Swipe left - go to next project
+      selectProject(currentIndex + 1);
+    }
   }
 }
 
-// Initialize touch controls
 function initTouchControls() {
-  const projectContainer = document.querySelector('.project-image-container');
-  
+  const projectContainer = document.querySelector(".project-image-container");
+
   // Add touch event listeners
-  projectContainer.addEventListener('touchstart', handleTouchStart, false);
-  projectContainer.addEventListener('touchend', handleTouchEnd, false);
-  
+  projectContainer.addEventListener("touchstart", handleTouchStart, false);
+  projectContainer.addEventListener("touchend", handleTouchEnd, false);
+
   // Add corner elements
   addProjectCorners();
 }
 
-// Add to document ready
-document.addEventListener('DOMContentLoaded', () => {
+previewImages.forEach((preview, index) => {
+  preview.addEventListener("click", () => {
+    selectProject(index);
+  });
+  preview.addEventListener("touchend", (e) => {
+    e.preventDefault();
+    selectProject(index);
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
   updatePreviews(0);
   initTouchControls();
 });
 
-// Update any existing event listeners to work with touch
-previewImages.forEach((preview, index) => {
-  preview.addEventListener('click', () => {
-      selectProject(index);
-  });
-  preview.addEventListener('touchend', (e) => {
-      e.preventDefault();
-      selectProject(index);
-  });
-});
+document.addEventListener("DOMContentLoaded", function () {
+  const iframe = document.querySelector(".site-preview");
+  const container = document.querySelector(".iframe-container");
 
-highlightNavLink();
+  if (iframe) {
+    iframe.onload = function () {
+      const iframeDoc = iframe.contentWindow.document;
+
+      // Hide other sections but keep sidebar and background
+      const style = iframeDoc.createElement("style");
+      style.textContent = `
+                .section:not(#about) {
+                    display: none !important;
+                }
+                #about {
+                    opacity: 1 !important;
+                    transform: none !important;
+                }
+                body {
+                background: rgba(250, 250, 250, 0.25) !important;
+        }
+            `;
+      iframeDoc.head.appendChild(style);
+
+      // Calculate and set the scale
+      function updateScale() {
+        const containerWidth = container.clientWidth;
+        const containerHeight = container.clientHeight;
+        const scaleX = containerWidth / 1920;
+        const scaleY = containerHeight / 1080;
+        const scale = Math.min(scaleX, scaleY);
+
+        // Center the iframe
+        const scaledWidth = 1920 * scale;
+        const scaledHeight = 1080 * scale;
+        const leftOffset = (containerWidth - scaledWidth) / 2;
+
+        iframe.style.transform = `scale(${scale})`;
+        iframe.style.left = `${leftOffset}px`;
+      }
+
+      // Initial scale
+      updateScale();
+
+      // Update scale on window resize
+      window.addEventListener("resize", updateScale);
+    };
+  }
+});

@@ -29,7 +29,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: 
+    background-image:
         linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
     background-size: 40px 40px;
@@ -37,7 +37,6 @@ body::before {
     z-index: -1;
 }
 
-/* Add a subtle radial gradient overlay */
 body::after {
     content: "";
     position: fixed;
@@ -170,7 +169,7 @@ h3 {
     position: relative;
 }
 
-/* ---------- About me  ---------- */
+/* ---------- About me ---------- */
 .about-section {
     padding: 2rem;
 }
@@ -183,7 +182,6 @@ h3 {
     margin: 0 auto;
 }
 
-/* Main Content Area */
 .main-content {
     position: relative;
 }
@@ -224,7 +222,6 @@ h3 {
     animation: glitch-main 4s infinite linear alternate-reverse;
 }
 
-/* Corner Decorations */
 .corner {
     position: absolute;
     width: 4rem;
@@ -234,32 +231,31 @@ h3 {
 .top-left {
     top: 0;
     left: 0;
-    border-left: 2px solid #81a5f9;
-    border-top: 2px solid #81a5f9;
+    border-left: 5px solid #81a5f9;
+    border-top: 5px solid #81a5f9;
 }
 
 .top-right {
     top: 0;
     right: 0;
-    border-right: 2px solid #ff69b4;
-    border-top: 2px solid #ff69b4;
+    border-right: 5px solid #ff69b4;
+    border-top: 5px solid #ff69b4;
 }
 
 .bottom-left {
     bottom: 0;
     left: 0;
-    border-left: 2px solid #ff69b4;
-    border-bottom: 2px solid #ff69b4;
+    border-left: 5px solid #ff69b4;
+    border-bottom: 5px solid #ff69b4;
 }
 
 .bottom-right {
     bottom: 0;
     right: 0;
-    border-right: 2px solid #81a5f9;
-    border-bottom: 2px solid #81a5f9;
+    border-right: 5px solid #81a5f9;
+    border-bottom: 5px solid #81a5f9;
 }
 
-/* CV Overlay */
 .cv-overlay {
     position: absolute;
     bottom: 2rem;
@@ -288,7 +284,8 @@ h3 {
     gap: 0.75rem;
 }
 
-.cv-label, .cv-name {
+.cv-label,
+.cv-name {
     color: white;
     font-weight: bold;
 }
@@ -309,7 +306,6 @@ h3 {
     text-align: left;
 }
 
-/* Stats Column */
 .stats-column {
     display: flex;
     flex-direction: column;
@@ -344,7 +340,6 @@ h3 {
     margin: 0;
 }
 
-/* Skills Grid */
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -372,7 +367,6 @@ h3 {
     text-align: left;
 }
 
-/* Social Links */
 .social-links {
     display: flex;
     gap: 1rem;
@@ -388,9 +382,17 @@ h3 {
     transform: translateY(-2px);
 }
 
-.social-links a:hover .fa-github { color: #333; }
-.social-links a:hover .fa-twitch { color: #6441a5; }
-.social-links a:hover .fa-linkedin { color: #0077b5; }
+.social-links a:hover .fa-github {
+    color: #333;
+}
+
+.social-links a:hover .fa-twitch {
+    color: #6441a5;
+}
+
+.social-links a:hover .fa-linkedin {
+    color: #0077b5;
+}
 
 /* ---------- Projects ---------- */
 .project-showcase {
@@ -400,7 +402,6 @@ h3 {
     overflow: hidden;
 }
 
-/* Main project display */
 .project-main {
     position: absolute;
     inset: 0;
@@ -438,7 +439,6 @@ h3 {
     border-radius: 0.5rem;
 }
 
-/* Project info */
 .project-info {
     position: absolute;
     bottom: 5rem;
@@ -483,7 +483,6 @@ h3 {
     color: #4a4a4a;
 }
 
-/* Side preview */
 .project-previews {
     position: absolute;
     top: 50%;
@@ -531,7 +530,25 @@ h3 {
     box-shadow: 0 0 0 2px #ff69b4;
 }
 
-/* Project link button */
+
+.iframe-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.site-preview {
+    width: 1920px;
+    height: 1080px;
+    border: none;
+    transform-origin: 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
 .project-link {
     display: inline-block;
     background: linear-gradient(90deg, #81a5f9, #ff69b4);
@@ -573,49 +590,62 @@ h3 {
 }
 
 @keyframes glitch {
-    0% { 
+    0% {
         transform: translate(0);
         text-shadow: none;
     }
-    1% { 
+
+    1% {
         transform: translate(-2px, 2px);
         text-shadow: 2px 0 #81a5f9, -2px 0 #ff69b4;
     }
-    2% { 
+
+    2% {
         transform: translate(2px, -2px);
         text-shadow: -2px 0 #81a5f9, 2px 0 #ff69b4;
     }
-    3% { 
+
+    3% {
         transform: translate(0);
         text-shadow: none;
     }
-    100% { 
+
+    100% {
         transform: translate(0);
         text-shadow: none;
     }
 }
 
 @keyframes glitch-1 {
-    0%, 100% { 
+
+    0%,
+    100% {
         opacity: 0;
         transform: translate(0);
         filter: hue-rotate(0deg);
     }
-    5%, 15% { 
+
+    5%,
+    15% {
         opacity: 0.25;
         transform: translate(-5px, 2px);
         filter: hue-rotate(45deg) saturate(1.5);
     }
-    10%, 20% { 
+
+    10%,
+    20% {
         opacity: 0;
         transform: translate(0);
         filter: hue-rotate(0deg);
     }
-    50%, 55% {
+
+    50%,
+    55% {
         opacity: 0.15;
         transform: translate(3px, -1px);
         filter: hue-rotate(-45deg) saturate(1.4);
     }
+
     60% {
         opacity: 0;
         transform: translate(0);
@@ -624,26 +654,35 @@ h3 {
 }
 
 @keyframes glitch-2 {
-    0%, 100% { 
+
+    0%,
+    100% {
         opacity: 0;
         transform: translate(0);
         filter: hue-rotate(0deg);
     }
-    15%, 25% { 
+
+    15%,
+    25% {
         opacity: 0.25;
         transform: translate(5px, -2px);
         filter: hue-rotate(-45deg) saturate(1.3);
     }
-    20%, 30% { 
+
+    20%,
+    30% {
         opacity: 0;
         transform: translate(0);
         filter: hue-rotate(0deg);
     }
-    65%, 70% {
+
+    65%,
+    70% {
         opacity: 0.15;
         transform: translate(-3px, 1px);
         filter: hue-rotate(45deg) saturate(1.2);
     }
+
     75% {
         opacity: 0;
         transform: translate(0);
@@ -652,15 +691,21 @@ h3 {
 }
 
 @keyframes glitch-main {
-    0%, 100% { 
+
+    0%,
+    100% {
         transform: translate(0);
         filter: brightness(1);
     }
-    8%, 12% { 
+
+    8%,
+    12% {
         transform: translate(-2px, 1px);
         filter: brightness(1.1);
     }
-    48%, 52% {
+
+    48%,
+    52% {
         transform: translate(2px, -1px);
         filter: brightness(0.9);
     }
@@ -732,8 +777,7 @@ h3 {
         height: 400px;
         margin-bottom: 0;
     }
-    
-    /* Frame corners for project images */
+
     .project-image-container .corner {
         position: absolute;
         width: 3rem;
@@ -769,7 +813,6 @@ h3 {
         border-bottom: 2px solid #81a5f9;
     }
 
-    /* Position project info over the image like CV overlay */
     .project-info {
         position: absolute;
         bottom: 2rem;
@@ -799,7 +842,6 @@ h3 {
         justify-content: flex-start;
     }
 
-    /* Restyle previews as dots roulette */
     .project-previews {
         position: relative;
         top: auto;
