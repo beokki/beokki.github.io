@@ -256,9 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Hide other sections but keep sidebar and background
       const style = iframeDoc.createElement("style");
       style.textContent = `
-                .section:not(#about) {
-                    display: none !important;
-                }
+                
                 #about {
                     opacity: 1 !important;
                     transform: none !important;
