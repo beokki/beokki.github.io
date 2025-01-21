@@ -58,6 +58,8 @@ function updateScrollBehavior() {
     : "hidden";
 }
 
+updateScrollBehavior();
+
 function scrollToSection(index) {
   if (index < 0 || index >= sections.length) return;
   sections[index].scrollIntoView({ behavior: "smooth" });
@@ -193,7 +195,6 @@ previewImages.forEach((preview, index) => {
   });
 });
 
-updateScrollBehavior();
 highlightNavLink();
 
 function handleTouchStart(event) {
@@ -256,7 +257,9 @@ document.addEventListener("DOMContentLoaded", function () {
       // Hide other sections but keep sidebar and background
       const style = iframeDoc.createElement("style");
       style.textContent = `
-                
+                .section:not(#about) {
+                    display: none !important;
+                }
                 #about {
                     opacity: 1 !important;
                     transform: none !important;
