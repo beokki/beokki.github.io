@@ -58,6 +58,8 @@ function updateScrollBehavior() {
     : "hidden";
 }
 
+updateScrollBehavior();
+
 function scrollToSection(index) {
   if (index < 0 || index >= sections.length) return;
   sections[index].scrollIntoView({ behavior: "smooth" });
@@ -193,7 +195,6 @@ previewImages.forEach((preview, index) => {
   });
 });
 
-updateScrollBehavior();
 highlightNavLink();
 
 function handleTouchStart(event) {
