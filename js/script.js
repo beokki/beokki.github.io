@@ -261,3 +261,29 @@ previewImages.forEach((preview, index) => {
 });
 
 highlightNavLink();
+
+document.addEventListener('DOMContentLoaded', function() {
+  const iframe = document.querySelector('.section-preview');
+  
+  if (iframe) {
+      iframe.onload = function() {
+          // Get the iframe content
+          const iframeDoc = iframe.contentWindow.document;
+          
+          // Add custom CSS to the iframe to show only the about section
+          const style = iframeDoc.createElement('style');
+          style.textContent = `
+              body { overflow: hidden; }
+              .sidebar, .section:not(#about) { display: none !important; }
+              .content { margin-left: 0 !important; width: 100% !important; }
+              #about { 
+                  opacity: 1 !important;
+                  transform: none !important;
+                  padding: 0 !important;
+              }
+          `;
+          
+          iframeDoc.head.appendChild(style);
+      };
+  }
+});
