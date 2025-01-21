@@ -74,6 +74,7 @@ function highlightNavLink() {
     link.classList.toggle("active", index === currentSectionIndex);
   });
 }
+
 function isMobileDevice() {
   return window.innerWidth <= 1024;
 }
