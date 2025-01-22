@@ -137,51 +137,72 @@
 
         <!------- Projects Section ------->
         <section id="projects" class="section">
-            <div class="project-showcase">
-                <div class="project-main">
-                    <div class="project-image-container">
-
-                        <div class="project-image active" data-index="0">
-                            <img src="media/Portfolio.jpg" alt="Personal Portfolio" />
-                        </div>
-
-                        <div class="project-image" data-index="1">
-                            <img src="media/" alt="Shiro Bot" />
-                        </div>
-                        
-                        <div class="project-image" data-index="2">
-                            <img src="media/Reeftown.jpg" alt="Reeftown" />
-                        </div>
-                    </div>
-
-                    <div class="project-info">
-                        <h3 class="project-title">Personal Portfolio</h3>
-                        <p class="project-description">
-                            Portfolio website showcasing my projects and skills.
-                        </p>
-                        <div class="project-tags">
-                            <span class="tag">HTML5</span>
-                            <span class="tag">CSS3</span>
-                            <span class="tag">JavaScript</span>
-                        </div>
-                        <a href="https://github.com/beokki/stevens.github.io" target="_blank" class="project-link">View
-                            Project</a>
-                    </div>
+            <div class="carousel-showcase">
+                <!-- Feature Number -->
+                <div class="feature-number">
+                    <span class="number-bg">01</span>
+                    
                 </div>
-
-                <div class="project-previews">
-                    <div class="preview-container">
-                        <div class="preview-image" data-index="0">
-                            <img src="media/SN.png" alt="Personal Portfolio" />
+        
+                <!-- Main Carousel Container -->
+                <div class="carousel-container">
+                    <div class="carousel-frame">
+                        <!-- Tech Frame Corners -->
+                        <div class="frame-corner top-left"></div>
+                        <div class="frame-corner top-right"></div>
+                        <div class="frame-corner bottom-left"></div>
+                        <div class="frame-corner bottom-right"></div>
+                        
+                        <!-- Main Content Area -->
+                        <div class="carousel-content">
+                            <div class="carousel-slide active" data-index="0">
+                                <img src="media/Portfolio.jpg" alt="Personal Portfolio" />
+                            </div>
+                            <div class="carousel-slide" data-index="1">
+                                <img src="media/ShiroBot.jpg" alt="Shiro Bot" />
+                            </div>
+                            <div class="carousel-slide" data-index="2">
+                                <img src="media/Reeftown.jpg" alt="Reeftown" />
+                            </div>
                         </div>
-
-                        <div class="preview-image" data-index="1">
-                            <img src="media/ShiroBot.jpg" alt="Shiro Bot" />
+        
+                        <!-- Project Info Box -->
+                        <div class="project-info">
+                            <div class="info-header">
+                                <div class="info-bg"></div>
+                                <div class="info-content">
+                                    <span class="project-label">PROJECT</span>
+                                    <span class="project-name">Portfolio</span>
+                                </div>
+                            </div>
+        
+                            <div class="info-box">
+                                <p class="project-description">
+                                    Portfolio website showcasing my projects and skills.
+                                </p>
+                                <a href="#" class="project-link">
+                                    <span>View Project</span>
+                                    <div class="link-arrow">→</div>
+                                </a>
+                            </div>
                         </div>
-
-                        <div class="preview-image" data-index="2">
-                            <img src="media/" alt="Reeftown" />
-                        </div>
+                    </div>
+        
+                    <!-- Navigation Arrows -->
+                    <button class="nav-arrow prev">
+                        <div class="arrow-bg"></div>
+                        <span>05</span>
+                    </button>
+                    <button class="nav-arrow next">
+                        <div class="arrow-bg"></div>
+                        <span>02</span>
+                    </button>
+        
+                    <!-- Bottom Indicators -->
+                    <div class="carousel-indicators">
+                        <div class="indicator active"></div>
+                        <div class="indicator"></div>
+                        <div class="indicator"></div>
                     </div>
                 </div>
             </div>

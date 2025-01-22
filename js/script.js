@@ -1,13 +1,7 @@
 const sections = document.querySelectorAll(".section");
 const navLinks = document.querySelectorAll(".nav-link");
 
-const projectImages = document.querySelectorAll(".project-image");
-const previewImages = document.querySelectorAll(".preview-image");
-const projectInfo = document.querySelector(".project-info");
-
-let currentIndex = 0;
 let currentSectionIndex = 0;
-let isTransitioning = false;
 
 const observerOptions = {
   root: null,
@@ -17,60 +11,37 @@ const observerOptions = {
 
 const sectionObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
-    const section = entry.target;
-    const isAboutSection = section.classList.contains("about-section");
+      // Skip animations if on mobile
+      if (isMobileDevice()) {
+          entry.target.classList.add("in-view");
+          return;
+      }
 
-    if (entry.isIntersecting) {
-      // Delay adding classes slightly to ensure smooth transition
-      setTimeout(() => {
-        const index = Array.from(sections).indexOf(section);
-        currentSectionIndex = index;
-        highlightNavLink();
-
-        section.classList.add("in-view");
-        if (isAboutSection) {
-          section.classList.add("animate-about");
-        }
-      }, 100);
-    } else {
-      // Add transition class before removing animations
-      section.classList.add("transitioning-out");
-
-      // Remove classes after transition
-      setTimeout(() => {
-        section.classList.remove(
-          "in-view",
-          "animate-about",
-          "transitioning-out"
-        );
-      }, 500);
-    }
+      const section = entry.target;
+      const isAboutSection = section.classList.contains('about-section');
+      
+      if (entry.isIntersecting) {
+          setTimeout(() => {
+              const index = Array.from(sections).indexOf(section);
+              currentSectionIndex = index;
+              highlightNavLink();
+              
+              section.classList.add("in-view");
+              if (isAboutSection) {
+                  section.classList.add("animate-about");
+              }
+          }, 100);
+      } else {
+          section.classList.add('transitioning-out');
+          
+          setTimeout(() => {
+              section.classList.remove("in-view", "animate-about", "transitioning-out");
+          }, 500);
+      }
   });
 }, observerOptions);
 
 sections.forEach((section) => sectionObserver.observe(section));
-
-const projectData = [
-  {
-    title: "Personal Portfolio",
-    description: "Portfolio website showcasing my projects and skills.",
-    tags: ["HTML5", "CSS3", "JavaScript"],
-    link: "https://github.com/beokki/stevens.github.io",
-  },
-  {
-    title: "Shiro Bot",
-    description:
-      "Discord Bot built with JavaScript, featuring custom commands.",
-    tags: ["JavaScript", "Discord.js", "Node.js"],
-    link: "https://github.com/beokki/Shiro-Bot",
-  },
-  {
-    title: "REEFTOWN",
-    description: "HD-2D game developed in Unreal Engine 5.5",
-    tags: ["Unreal Engine", "2D", "3D", "Game Design"],
-    link: "#",
-  },
-];
 
 function debounce(func, wait) {
   let timeout;
@@ -112,17 +83,25 @@ updateScrollBehavior();
 
 function scrollToSection(index) {
   if (index < 0 || index >= sections.length) return;
-
+  
+  // Skip transition if on mobile
+  if (isMobileDevice()) {
+      sections[index].scrollIntoView({ behavior: "smooth" });
+      currentSectionIndex = index;
+      highlightNavLink();
+      return;
+  }
+  
   const currentSection = sections[currentSectionIndex];
-    if (currentSection) {
-        currentSection.classList.add('transitioning-out');
-    }
-
+  if (currentSection) {
+      currentSection.classList.add('transitioning-out');
+  }
+  
   setTimeout(() => {
-        sections[index].scrollIntoView({ behavior: "smooth" });
-        currentSectionIndex = index;
-        highlightNavLink();
-    }, 100);
+      sections[index].scrollIntoView({ behavior: "smooth" });
+      currentSectionIndex = index;
+      highlightNavLink();
+  }, 100);
 }
 
 function highlightNavLink() {
@@ -135,157 +114,189 @@ function highlightNavLink() {
   });
 }
 
+highlightNavLink();
+
+// Project data
+const projects = [
+  {
+      title: "Portfolio",
+      description: "Portfolio website showcasing my projects and skills.",
+      link: "https://github.com/beokki/stevens.github.io",
+      number: "01"
+  },
+  {
+      title: "Shiro",
+      description: "Discord Bot built with JavaScript, featuring custom commands.",
+      link: "https://github.com/beokki/Shiro-Bot",
+      number: "02"
+  },
+  {
+      title: "REEFTOWN",
+      description: "HD-2D game developed in Unreal Engine 5.5",
+      link: "#",
+      number: "03"
+  }
+  // Add more projects here
+];
+
+// DOM Elements
+const carousel = document.querySelector('.carousel-content');
+const slides = document.querySelectorAll('.carousel-slide');
+const indicators = document.querySelectorAll('.indicator');
+const prevBtn = document.querySelector('.nav-arrow.prev');
+const nextBtn = document.querySelector('.nav-arrow.next');
+const projectInfo = document.querySelector('.project-info');
+const featureNumber = document.querySelector('.number-bg');
+
+let currentIndex = 0;
+let isTransitioning = false;
+let touchStartX = 0;
+let touchEndX = 0;
+
+// Update project information with animation
 function updateProjectInfo(index) {
-  const project = projectData[index];
-  const title = projectInfo.querySelector(".project-title");
-  const description = projectInfo.querySelector(".project-description");
-  const tags = projectInfo.querySelector(".project-tags");
-  const link = projectInfo.querySelector(".project-link");
+  const project = projects[index];
+  const infoContent = projectInfo.querySelector('.info-content');
+  const infoBox = projectInfo.querySelector('.info-box');
 
-  title.textContent = project.title;
-  description.textContent = project.description;
-  tags.innerHTML = project.tags
-    .map((tag) => `<span class="tag">${tag}</span>`)
-    .join("");
-  link.href = project.link;
+  // Animate out
+  projectInfo.style.opacity = '0';
+  projectInfo.style.transform = 'translateX(-20px)';
+
+  setTimeout(() => {
+      // Update content
+      infoContent.querySelector('.project-name').textContent = project.title;
+      infoBox.querySelector('.project-description').textContent = project.description;
+      infoBox.querySelector('.project-link').href = project.link;
+
+      // Update feature number
+      featureNumber.textContent = project.number;
+
+      // Update navigation numbers
+      const prevIndex = (index - 1 + projects.length) % projects.length;
+      const nextIndex = (index + 1) % projects.length;
+      prevBtn.querySelector('span').textContent = projects[prevIndex].number;
+      nextBtn.querySelector('span').textContent = projects[nextIndex].number;
+
+      // Animate in
+      projectInfo.style.opacity = '1';
+      projectInfo.style.transform = 'translateX(0)';
+  }, 300);
 }
 
-function updatePreviews(newIndex) {
-  const totalPreviews = previewImages.length;
-  const spacing = 90; // Spacing between items
-  const centerY = 100; // Center position
-
-  previewImages.forEach((preview, i) => {
-    // Calculate relative position in the rotation
-    let relativeIndex = i - newIndex;
-    if (relativeIndex > totalPreviews / 2) relativeIndex -= totalPreviews;
-    if (relativeIndex < -totalPreviews / 2) relativeIndex += totalPreviews;
-
-    // Always calculate position along the oval path
-    const y = centerY + relativeIndex * spacing;
-    const x = -50 + Math.abs(relativeIndex) * 3; // Subtle horizontal movement
-
-    // Show/hide based on position
-    if (Math.abs(relativeIndex) <= 1) {
-      preview.classList.add("visible");
-    } else {
-      preview.classList.remove("visible");
-    }
-
-    // Apply transform - items always follow the path
-    preview.style.transform = `translate(${x}%, ${y}px)`;
-
-    // Update active state
-    preview.setAttribute("data-active", i === newIndex ? "true" : "false");
-  });
-}
-
-function selectProject(newIndex) {
+// Slide transition
+function transitionSlide(index) {
   if (isTransitioning) return;
   isTransitioning = true;
 
-  const totalProjects = projectImages.length;
-  newIndex = ((newIndex % totalProjects) + totalProjects) % totalProjects;
+  // Update slides
+  slides.forEach(slide => slide.classList.remove('active'));
+  slides[index].classList.add('active');
 
-  // Update main project
-  projectImages[currentIndex].classList.remove("active");
-  projectImages[newIndex].classList.add("active");
-
-  // Update previews
-  updatePreviews(newIndex);
+  // Update indicators
+  indicators.forEach(indicator => indicator.classList.remove('active'));
+  indicators[index].classList.add('active');
 
   // Update project info
-  updateProjectInfo(newIndex);
+  updateProjectInfo(index);
 
-  // Update current index
-  currentIndex = newIndex;
-
+  // Reset transition flag
   setTimeout(() => {
-    isTransitioning = false;
+      isTransitioning = false;
   }, 500);
 }
 
-// Initialize
-document.addEventListener("DOMContentLoaded", () => {
-  updatePreviews(0);
-});
-
-previewImages.forEach((preview, index) => {
-  preview.addEventListener("click", () => {
-    selectProject(index);
-  });
-});
-
-function addProjectCorners() {
-  const projectContainer = document.querySelector(".project-image-container");
-  if (!projectContainer.querySelector(".corner")) {
-    const corners = ["top-left", "top-right", "bottom-left", "bottom-right"];
-    corners.forEach((position) => {
-      const corner = document.createElement("div");
-      corner.className = `corner ${position}`;
-      projectContainer.appendChild(corner);
-    });
-  }
+// Navigation functions
+function nextSlide() {
+  if (isTransitioning) return;
+  currentIndex = (currentIndex + 1) % slides.length;
+  transitionSlide(currentIndex);
 }
 
-// Touch handling variables
-let touchStartX = 0;
-let touchEndX = 0;
-const minSwipeDistance = 50; // Minimum distance for a swipe
-
-// Handle touch start
-function handleTouchStart(event) {
-  touchStartX = event.touches[0].clientX;
+function prevSlide() {
+  if (isTransitioning) return;
+  currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+  transitionSlide(currentIndex);
 }
 
-// Handle touch end
-function handleTouchEnd(event) {
-  touchEndX = event.changedTouches[0].clientX;
+// Touch handlers
+function handleTouchStart(e) {
+  touchStartX = e.touches[0].clientX;
+}
+
+function handleTouchEnd(e) {
+  touchEndX = e.changedTouches[0].clientX;
   handleSwipe();
 }
 
-// Process swipe
 function handleSwipe() {
   const swipeDistance = touchEndX - touchStartX;
+  const minSwipeDistance = 50;
 
   if (Math.abs(swipeDistance) > minSwipeDistance) {
-    if (swipeDistance > 0) {
-      // Swipe right - go to previous project
-      selectProject(currentIndex - 1);
-    } else {
-      // Swipe left - go to next project
-      selectProject(currentIndex + 1);
-    }
+      if (swipeDistance > 0) {
+          prevSlide();
+      } else {
+          nextSlide();
+      }
   }
 }
 
-// Initialize touch controls
-function initTouchControls() {
-  const projectContainer = document.querySelector(".project-image-container");
+// Event listeners
+prevBtn.addEventListener('click', prevSlide);
+nextBtn.addEventListener('click', nextSlide);
 
-  // Add touch event listeners
-  projectContainer.addEventListener("touchstart", handleTouchStart, false);
-  projectContainer.addEventListener("touchend", handleTouchEnd, false);
+indicators.forEach((indicator, index) => {
+  indicator.addEventListener('click', () => {
+      if (currentIndex !== index) {
+          currentIndex = index;
+          transitionSlide(currentIndex);
+      }
+  });
+});
 
-  // Add corner elements
-  addProjectCorners();
+carousel.addEventListener('touchstart', handleTouchStart);
+carousel.addEventListener('touchend', handleTouchEnd);
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') {
+      prevSlide();
+  } else if (e.key === 'ArrowRight') {
+      nextSlide();
+  }
+});
+
+// function startAutoSlide(interval = 5000) {
+//   return setInterval(() => {
+//       if (!document.hidden && !isTransitioning) {
+//           nextSlide();
+//       }
+//   }, interval);
+// }
+
+// Initialize
+function initializeCarousel() {
+  // Set initial state
+  transitionSlide(currentIndex);
+  // startAutoSlide();
 }
 
-// Add to document ready
-document.addEventListener("DOMContentLoaded", () => {
-  updatePreviews(0);
-  initTouchControls();
+// Initialize on load
+document.addEventListener('DOMContentLoaded', initializeCarousel);
+
+// Handle visibility change
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+      isTransitioning = false;
+  }
 });
 
-// Update any existing event listeners to work with touch
-previewImages.forEach((preview, index) => {
-  preview.addEventListener("click", () => {
-    selectProject(index);
-  });
-  preview.addEventListener("touchend", (e) => {
-    e.preventDefault();
-    selectProject(index);
-  });
-});
+// Add resize handler for mobile optimization
+function handleResize() {
+  const isMobile = window.innerWidth <= 768;
+  carousel.style.height = isMobile ? 'auto' : '100%';
+}
 
-highlightNavLink();
+window.addEventListener('resize', handleResize);
+handleResize();
