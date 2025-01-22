@@ -434,7 +434,7 @@ h3 {
     width: 90%;
     max-width: 1200px;
     aspect-ratio: 16/9;
-    background: rgba(0,0,0,0.05);
+    background: linear-gradient(135deg, rgba(129, 165, 249, 0.1), rgba(255, 105, 180, 0.1));
     overflow: hidden;
 }
 
