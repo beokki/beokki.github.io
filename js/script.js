@@ -12,16 +12,38 @@ let isTransitioning = false;
 const observerOptions = {
   root: null,
   rootMargin: "0px",
-  threshold: 0.5,
+  threshold: 0.95,
 };
 
 const sectionObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
+    const section = entry.target;
+    const isAboutSection = section.classList.contains("about-section");
+
     if (entry.isIntersecting) {
-      const index = Array.from(sections).indexOf(entry.target);
-      currentSectionIndex = index;
-      highlightNavLink();
-      entry.target.classList.add("in-view");
+      // Delay adding classes slightly to ensure smooth transition
+      setTimeout(() => {
+        const index = Array.from(sections).indexOf(section);
+        currentSectionIndex = index;
+        highlightNavLink();
+
+        section.classList.add("in-view");
+        if (isAboutSection) {
+          section.classList.add("animate-about");
+        }
+      }, 100);
+    } else {
+      // Add transition class before removing animations
+      section.classList.add("transitioning-out");
+
+      // Remove classes after transition
+      setTimeout(() => {
+        section.classList.remove(
+          "in-view",
+          "animate-about",
+          "transitioning-out"
+        );
+      }, 500);
     }
   });
 }, observerOptions);
@@ -31,8 +53,7 @@ sections.forEach((section) => sectionObserver.observe(section));
 const projectData = [
   {
     title: "Personal Portfolio",
-    description:
-      "Portfolio website showcasing my projects and skills.",
+    description: "Portfolio website showcasing my projects and skills.",
     tags: ["HTML5", "CSS3", "JavaScript"],
     link: "https://github.com/beokki/stevens.github.io",
   },
@@ -45,11 +66,10 @@ const projectData = [
   },
   {
     title: "REEFTOWN",
-    description:
-      "HD-2D game developed in Unreal Engine 5.5",
-    tags: ["Unreal Engine","2D", "3D", "Game Design"],
+    description: "HD-2D game developed in Unreal Engine 5.5",
+    tags: ["Unreal Engine", "2D", "3D", "Game Design"],
     link: "#",
-  }
+  },
 ];
 
 function debounce(func, wait) {
@@ -92,9 +112,17 @@ updateScrollBehavior();
 
 function scrollToSection(index) {
   if (index < 0 || index >= sections.length) return;
-  sections[index].scrollIntoView({ behavior: "smooth" });
-  currentSectionIndex = index;
-  highlightNavLink();
+
+  const currentSection = sections[currentSectionIndex];
+    if (currentSection) {
+        currentSection.classList.add('transitioning-out');
+    }
+
+  setTimeout(() => {
+        sections[index].scrollIntoView({ behavior: "smooth" });
+        currentSectionIndex = index;
+        highlightNavLink();
+    }, 100);
 }
 
 function highlightNavLink() {
@@ -189,14 +217,14 @@ previewImages.forEach((preview, index) => {
 });
 
 function addProjectCorners() {
-  const projectContainer = document.querySelector('.project-image-container');
-  if (!projectContainer.querySelector('.corner')) {
-      const corners = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
-      corners.forEach(position => {
-          const corner = document.createElement('div');
-          corner.className = `corner ${position}`;
-          projectContainer.appendChild(corner);
-      });
+  const projectContainer = document.querySelector(".project-image-container");
+  if (!projectContainer.querySelector(".corner")) {
+    const corners = ["top-left", "top-right", "bottom-left", "bottom-right"];
+    corners.forEach((position) => {
+      const corner = document.createElement("div");
+      corner.className = `corner ${position}`;
+      projectContainer.appendChild(corner);
+    });
   }
 }
 
@@ -219,44 +247,44 @@ function handleTouchEnd(event) {
 // Process swipe
 function handleSwipe() {
   const swipeDistance = touchEndX - touchStartX;
-  
+
   if (Math.abs(swipeDistance) > minSwipeDistance) {
-      if (swipeDistance > 0) {
-          // Swipe right - go to previous project
-          selectProject(currentIndex - 1);
-      } else {
-          // Swipe left - go to next project
-          selectProject(currentIndex + 1);
-      }
+    if (swipeDistance > 0) {
+      // Swipe right - go to previous project
+      selectProject(currentIndex - 1);
+    } else {
+      // Swipe left - go to next project
+      selectProject(currentIndex + 1);
+    }
   }
 }
 
 // Initialize touch controls
 function initTouchControls() {
-  const projectContainer = document.querySelector('.project-image-container');
-  
+  const projectContainer = document.querySelector(".project-image-container");
+
   // Add touch event listeners
-  projectContainer.addEventListener('touchstart', handleTouchStart, false);
-  projectContainer.addEventListener('touchend', handleTouchEnd, false);
-  
+  projectContainer.addEventListener("touchstart", handleTouchStart, false);
+  projectContainer.addEventListener("touchend", handleTouchEnd, false);
+
   // Add corner elements
   addProjectCorners();
 }
 
 // Add to document ready
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   updatePreviews(0);
   initTouchControls();
 });
 
 // Update any existing event listeners to work with touch
 previewImages.forEach((preview, index) => {
-  preview.addEventListener('click', () => {
-      selectProject(index);
+  preview.addEventListener("click", () => {
+    selectProject(index);
   });
-  preview.addEventListener('touchend', (e) => {
-      e.preventDefault();
-      selectProject(index);
+  preview.addEventListener("touchend", (e) => {
+    e.preventDefault();
+    selectProject(index);
   });
 });
 

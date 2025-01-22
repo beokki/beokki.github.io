@@ -193,6 +193,7 @@ h3 {
     width: 100%;
     height: 800px;
     overflow: hidden;
+    background: linear-gradient(135deg, rgba(129, 165, 249, 0.1), rgba(255, 105, 180, 0.1));
 }
 
 .image-container::before,
@@ -416,6 +417,7 @@ h3 {
     height: 25rem;
     margin-bottom: 1.5rem;
     overflow: hidden;
+    background: linear-gradient(135deg, rgba(129, 165, 249, 0.1), rgba(255, 105, 180, 0.1));
 }
 
 .project-image {
@@ -663,6 +665,112 @@ h3 {
     48%, 52% {
         transform: translate(2px, -1px);
         filter: brightness(0.9);
+    }
+}
+
+.section {
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.section:not(.in-view) {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* About section specific animations */
+.about-section .main-content,
+.about-section .cv-overlay,
+.about-section .stats-column > * {
+    opacity: 0;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* Animation triggers */
+.about-section.animate-about .main-content {
+    animation: glitchEntrance 0.8s ease forwards;
+}
+
+.about-section.animate-about .cv-overlay {
+    animation: glitchSlideIn 0.8s ease forwards 0.4s;
+}
+
+.about-section.animate-about .stats-column > *:nth-child(1) {
+    animation: slideIn 0.6s ease forwards 0.6s;
+}
+
+.about-section.animate-about .stats-column > *:nth-child(2) {
+    animation: slideIn 0.6s ease forwards 0.8s;
+}
+
+.about-section.animate-about .stats-column > *:nth-child(3) {
+    animation: slideIn 0.6s ease forwards 1s;
+}
+
+@keyframes glitchEntrance {
+    0% {
+        opacity: 0;
+        clip-path: inset(50% 0 50% 0);
+        transform: scale(0.97);
+    }
+    20% {
+        clip-path: inset(10% 0 60% 0);
+        transform: scale(0.98);
+    }
+    40% {
+        clip-path: inset(60% 0 10% 0);
+        transform: scale(0.99);
+    }
+    60% {
+        clip-path: inset(40% 0 30% 0);
+        transform: scale(1.01);
+    }
+    80% {
+        clip-path: inset(20% 0 40% 0);
+        transform: scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+        transform: scale(1);
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes glitchSlideIn {
+    0% {
+        opacity: 0;
+        transform: translate(-30px, 30px);
+        filter: hue-rotate(90deg) contrast(150%);
+    }
+    25% {
+        opacity: 0.3;
+        transform: translate(15px, -10px);
+        filter: hue-rotate(-45deg) contrast(200%);
+    }
+    50% {
+        opacity: 0.6;
+        transform: translate(-10px, 15px);
+        filter: hue-rotate(45deg) contrast(150%);
+    }
+    75% {
+        opacity: 0.8;
+        transform: translate(5px, -5px);
+        filter: hue-rotate(-90deg) contrast(125%);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
+        filter: none;
     }
 }
 
