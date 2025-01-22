@@ -120,21 +120,27 @@ highlightNavLink();
 const projects = [
   {
       title: "REEFTOWN",
-      description: "HD-2D game developed in Unreal Engine 5.5",
+      description: "HD-2D game project developed in Unreal Engine 5.5",
       link: "#",
       number: "01"
+  },
+  {
+    title: "I-LAND [WIP]",
+    description: "Project as a Game Designer!",
+    link: "assets/I-LAND.pdf",
+    number: "02"
   },
   {
       title: "Portfolio",
       description: "Portfolio website showcasing my projects and skills.",
       link: "https://github.com/beokki/stevens.github.io",
-      number: "02"
+      number: "03"
   },
   {
       title: "Shiro",
       description: "Discord Bot built with JavaScript, featuring custom commands.",
       link: "https://github.com/beokki/Shiro-Bot",
-      number: "03"
+      number: "04"
   }
   // Add more projects here
 ];
