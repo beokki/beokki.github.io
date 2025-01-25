@@ -120,8 +120,8 @@ highlightNavLink();
 const projects = [
   {
       title: "REEFTOWN",
-      description: "HD-2D game project developed in Unreal Engine 5.5",
-      link: "#",
+      description: "2.5D game project developed in Unreal Engine 5.5",
+      link: "https://github.com/beokki/Reeftown",
       number: "01"
   },
   {
