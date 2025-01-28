@@ -120,14 +120,14 @@ highlightNavLink();
 const projects = [
   {
       title: "REEFTOWN",
-      description: "2.5D game project developed in Unreal Engine 5.5",
+      description: "Reeftown is a short 2.5D game built in Unreal Engine 5.5, where players must escape a shark-infested town. I designed the game mechanics and level, to create an engaging experience with dynamic abilities and combat. Players can utilize two unique abilities to defeat sharks and to escape the town.",
       link: "https://github.com/beokki/Reeftown",
       number: "01"
   },
   {
-    title: "I-LAND [WIP]",
-    description: "Project as a Game Designer!",
-    link: "assets/I-LAND.pdf",
+    title: "I-LAND (In Progress)",
+    description: "I-LAND is a cozy open-world single-player game inspired by The Legend of Zelda: Breath of the Wild and Stardew Valley. Set in a land of lush landscapes and floating islands, the game invites players to explore, gather resources and uncover hidden secrets. I contributed as the Game Designer, focusing on crafting an engaging world, light survival mechanics and seamless exploration.The warm color palette and calming atmosphere aim to provide players with an immersive and relaxing experience, blending fantasy with heartfelt storytelling.",
+    link: "assets/(GDD) I-LAND.pdf",
     number: "02"
   },
   {
