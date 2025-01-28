@@ -389,6 +389,7 @@ h3 {
     transform: translateY(-2px);
 }
 
+.social-links a:hover .fa-file { color: #81a5f9; }
 .social-links a:hover .fa-github { color: #333; }
 .social-links a:hover .fa-twitch { color: #6441a5; }
 .social-links a:hover .fa-linkedin { color: #0077b5; }
