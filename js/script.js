@@ -141,6 +141,12 @@ const projects = [
       description: "Discord Bot built with JavaScript, featuring custom commands.",
       link: "https://github.com/beokki/Shiro-Bot",
       number: "04"
+  },
+  {
+      title: "Dojo",
+      description: "3-D Environment Modeling Project",
+      link: "media/HighresScreenshot00001.png",
+      number: "05"
   }
   // Add more projects here
 ];
